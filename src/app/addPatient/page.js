@@ -1,7 +1,7 @@
 "use client";
 import React, { useState, useEffect,useRef } from 'react';
 import MyEditor from '../../../public/wangedit/wangedit'
-import { ProForm, ProFormText } from '@ant-design/pro-components';
+import { ProForm, ProFormText, ProFormRadio } from '@ant-design/pro-components';
 import styles from "../page.module.css";
 import "./add.scss"
 
@@ -36,7 +36,7 @@ export default function Deatil() {
 
 
     return (<div className={styles.body}>
-        <div className='addTitle'>新增标准方剂</div>
+        <div className='addTitle'>新增患者</div>
         <div className='line'></div>
         <div className='formWrap'>
             <ProForm
@@ -53,16 +53,39 @@ export default function Deatil() {
                 <ProFormText
                     width="md"
                     name="name"
-                    label="标准方剂名称"
-                    tooltip="最长为 24 位"
+                    label="姓名"
                     placeholder="请输入名称"
                     initialValue={params.name || ''}
                 />
-                <ProForm.Item name={'describe'} label="标准方剂描述" initialValue={params.describe || ''}>
+                <ProFormText
+                    width="md"
+                    name="age"
+                    label="年龄"
+                    placeholder="请输入名称"
+                    initialValue={params.name || ''}
+                />
+                <ProFormRadio.Group
+                    label="性别"
+                    name="sex"
+                    initialValue="男"
+                    options={['男', '女']}
+                />
+                <ProFormText
+                    width="md"
+                    name="phone"
+                    label="联系方式"
+                    placeholder="请输入名称"
+                    initialValue={params.name || ''}
+                />
+                <ProFormText
+                    width="md"
+                    name="address"
+                    label="联系地址"
+                    placeholder="请输入名称"
+                    initialValue={params.name || ''}
+                />
+                <ProForm.Item name={'describe'} label="描述" initialValue={params.describe || ''}>
                     <MyEditor cont={params.describe || ''} />
-                </ProForm.Item>
-                <ProForm.Item name={'remark'} label="标准方剂注解"initialValue={params.remark || ''}>
-                    <MyEditor cont={params.remark || ''} />
                 </ProForm.Item>
             </ProForm>
         </div>

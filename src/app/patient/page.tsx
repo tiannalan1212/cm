@@ -3,18 +3,10 @@ import React, { useState } from 'react';
 // import type { FormProps } from 'antd';
 import { Button, Form, Input } from 'antd';
 import { ProTable } from '@ant-design/pro-components';
-
+import { PlusOutlined } from '@ant-design/icons';
 export default function Home() {
 
 
-
-  // const onFinish: FormProps<FieldType>['onFinish'] = (values) => {
-  //   console.log('Success:', values);
-  // };
-
-  // const onFinishFailed: FormProps<FieldType>['onFinishFailed'] = (errorInfo) => {
-  //   console.log('Failed:', errorInfo);
-  // };
   const columns = [
     {
       title: '患者名称',
@@ -102,6 +94,16 @@ export default function Home() {
       search={{
         labelWidth: 'auto',
       }}
+      toolBarRender={() => [
+        <Button
+          key="button"
+          icon={<PlusOutlined />}
+          href='/addStandardRecipe'
+          type="primary"
+        >
+          新建
+        </Button>
+      ]}
     />
 
   </main>

@@ -105,7 +105,7 @@ function MyEditor(h) {
     return (
         <>
 
-            <div style={{ border: '1px solid #ccc', zIndex: 100, marginTop: '15px'}}>
+            <div style={{ border: '1px solid #ccc', zIndex: 100, margin: '15px 0',width: '800px'}}>
                 <Toolbar
                     editor={editor}
                     defaultConfig={toolbarConfig}
