@@ -6,8 +6,28 @@ import React, { useState, useEffect,useRef } from 'react';
 
 
 export default function Home() {
+  const [userData, setUserData] = useState(null);
 
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch('/api/users');
+        if (response.ok) {
+          const data = await response.json();
+          setUserData(data);
+        } else {
+          throw new Error('Failed to fetch data');
+        }
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
 
+    fetchData();
+  }, []);
+
+  
+  
   return (
     <main className={styles.main}>
       <div className={styles.center}>

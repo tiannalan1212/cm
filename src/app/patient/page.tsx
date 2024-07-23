@@ -1,6 +1,5 @@
 "use client";
-import React, { useState } from 'react';
-// import type { FormProps } from 'antd';
+import React, { useState, useEffect } from 'react';
 import { Button, Form, Input } from 'antd';
 import { ProTable } from '@ant-design/pro-components';
 import { PlusOutlined } from '@ant-design/icons';
@@ -69,21 +68,29 @@ export default function Home() {
     },
   ];
   const [params, setParams] = useState({ current: 1, pageSize: 20 });
-
+  
   const fetchData = async (params: any) => {
     const { current, pageSize, sorter } = params;
-    // const response = await fetch(`/api/data?current=${current}&pageSize=${pageSize}&sorter=${sorter}`);
-    // const data = await response.json();
-    const list = [
-      { 'id': '111', 'name': '张三', 'depict': '描述描述', 'chapter': '太阳篇', 'remark': '注解注解', 'createTime': '2024-06-27' },
-      { 'id': '222', 'name': '李四', 'depict': '描述描222述', 'chapter': '太阳篇', 'remark': '注解注解', 'createTime': '2010-03-02' }
-    ]
-    return {
-      data: list,
-      total: list.length,
-      success: true,
-    };
+
+
+    try {
+      const response = await fetch(`/api/users?current=${current}&pageSize=${pageSize}&sorter=${sorter}`,{method: "GET"});
+      if (response.ok) {
+        const data = await response.json();
+        console.log('data',data)
+        return {
+          data: data,
+          total: data.length,
+          success: true,
+        };
+      } else {
+        throw new Error('Failed to fetch data');
+      }
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    }
   };
+
   return (<main>
 
     <ProTable
@@ -98,7 +105,7 @@ export default function Home() {
         <Button
           key="button"
           icon={<PlusOutlined />}
-          href='/addStandardRecipe'
+          href='/addPatient'
           type="primary"
         >
           新建

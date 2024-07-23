@@ -2,6 +2,7 @@
 import React, { useState, useEffect,useRef } from 'react';
 import MyEditor from '../../../public/wangedit/wangedit'
 import { ProForm, ProFormText, ProFormRadio } from '@ant-design/pro-components';
+import {message} from 'antd'
 import styles from "../page.module.css";
 import "./add.scss"
 
@@ -33,6 +34,17 @@ export default function Deatil() {
     const onChange = (newFields) => {
         
     }
+    const onFinish = async(values)=>{
+        try{
+            await fetch('/api/users',{
+                method: "POST",
+                body: JSON.stringify(values)
+            })
+
+        }catch(err){
+            console.error('Error fetching data:', error);
+        }
+    }
 
 
     return (<div className={styles.body}>
@@ -46,6 +58,7 @@ export default function Deatil() {
                 onFinish={async (values) => {
                     // await waitTime(2000);
                     console.log(values);
+                    onFinish(values)
                     message.success('提交成功');
                 }}
                 initialValues={params}
