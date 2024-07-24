@@ -61,8 +61,8 @@ export default function Home() {
       dataIndex: 'age',
       hideInSearch: true,
       render: () => (<div>
-        <Button type='link'>详情</Button>
-        <Button type='link'>编辑</Button>
+        <Button type='link' href='/patientDetail'>详情</Button>
+        <Button type='link' href='/addPatient'>编辑</Button>
         <Button type='link'>快速开方</Button>
       </div>)
     },
