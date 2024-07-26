@@ -2,7 +2,7 @@ import { query } from "../../../../lib/db";
 
 export async function GET(request) {
     const users = await query({
-        query: "SELECT * FROM patient",
+        query: "SELECT * FROM patient WHERE name='zdl'",
         values: [],
     });
 
@@ -17,8 +17,8 @@ export async function POST(request) {
     try {
         const { data } = await request.json();
         const updateUsers = await query({
-            query: "INSERT INTO patient (name) VALUES (?)",
-            values: [data.name],
+            query: `INSERT INTO patient(id,name) VALUES(?,?)`,
+            values: ["10000004","nqwed"],
         });
         const result = updateUsers.affectedRows;
         let message = "";
