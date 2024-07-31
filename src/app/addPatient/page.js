@@ -55,11 +55,11 @@ export default function Deatil() {
                 form={form}
                 formRef={formRef}
                 //layout="inline"
-                onFinish={async (values) => {
+                onFinish={(values) => {
                     // await waitTime(2000);
                     console.log(values);
                     onFinish(values)
-                    message.success('提交成功');
+                    //message.success('提交成功');
                 }}
                 initialValues={params}
             >

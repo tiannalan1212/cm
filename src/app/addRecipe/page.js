@@ -2,12 +2,19 @@
 import React, { useState, useEffect,useRef } from 'react';
 import MyEditor from '../../../public/wangedit/wangedit'
 import { ProForm, ProFormText, ProFormRadio } from '@ant-design/pro-components';
-import { Button, Form, Input } from 'antd';
+import { Button, Modal, Input, Radio, Space, message } from 'antd';
 import styles from "../page.module.css";
 import "./add.scss"
+const { Search } = Input;
 
 export default function Deatil() {
     const [params, setParams] = useState({})
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [isStandardOpen, setIsStandardOpen] = useState(false);
+    const [patientList, setPatientList] = useState([]);
+    const [standardList, setStandardList] = useState([]);
+    const [standard, setStandard] = useState({});
+    const [patient, setPatient] = useState({});
     const [form] = ProForm.useForm();
 
     const formRef = useRef();
@@ -27,14 +34,75 @@ export default function Deatil() {
         console.log('formRef?.current',formRef?.current)
         getParams(['isAdd', 'name', 'describe', 'remark'])
     }, [window.location.search,])
+   
 
-    const onReset = () => {
-
+    const handleOk = () => {
+        console.log('formRef?.current', formRef?.current)
+        formRef?.current.setFieldValue('name',patient.name)
+        formRef?.current.setFieldValue('age',patient.age)
+        formRef?.current.setFieldValue('sex',patient.sex)
+        handleCancel()
     }
-    const onChange = (newFields) => {
-        
+    const handleCancel = () => {
+        setIsModalOpen(false);
+        setPatient({})
+    }
+    const onStandardSearch = (v) => {
+        fetchStandardList(v)
     }
 
+    const handleStandardOk = () => {
+        console.log('formRef?.current', formRef?.current)
+        formRef?.current.setFieldValue('name',patient.name)
+        formRef?.current.setFieldValue('age',patient.age)
+        formRef?.current.setFieldValue('sex',patient.sex)
+        handleStandardCancel()
+    }
+    const handleStandardCancel = () => {
+        setIsStandardOpen(false);
+        setStandard({})
+    }
+    const onSearch = (v) => {
+        fetchPatientList(v)
+    }
+
+    const fetchPatientList = async (name) => {
+        try {
+          const response = await fetch(`/api/users?name=${name||''}`,{method: "GET"});
+          if (response.ok) {
+            const data = await response.json();
+            console.log('data',data)
+            setPatientList(data)
+            setIsModalOpen(true);
+          } else {
+            throw new Error('Failed to fetch data');
+          }
+        } catch (error) {
+          console.error('Error fetching data:', error);
+        }
+    };
+    const fetchStandardList = async (name) => {
+        // try {
+        //   const response = await fetch(`/api/users?name=${name||''}`,{method: "GET"});
+        //   if (response.ok) {
+        //     const data = await response.json();
+        //     console.log('data',data)
+        //     setPatientList(data)
+            setIsStandardOpen(true);
+        //   } else {
+        //     throw new Error('Failed to fetch data');
+        //   }
+        // } catch (error) {
+        //   console.error('Error fetching data:', error);
+        // }
+    };
+
+    const onRadioChange = (e) => {
+        setPatient(e.target.value)
+    }
+    const onStandardRadioChange = (e) => {
+        setStandard(e.target.value)
+    }
 
     return (<div className={styles.body}>
         <div className='addTitle'>新增处方</div>
@@ -46,7 +114,7 @@ export default function Deatil() {
                 //layout="inline"
                 onFinish={async (values) => {
                     // await waitTime(2000);
-                    console.log(values);
+                    console.log('valuesvalues======',values);
                     message.success('提交成功');
                 }}
                 initialValues={params}
@@ -57,22 +125,25 @@ export default function Deatil() {
                     <ProFormText
                         width="md"
                         name="name"
-                        //label="姓名"
                         placeholder="请输入名称"
+                        disabled={true}
                         initialValue={params.name || ''}
                     />
-                    <Button>选择已有患者</Button>
+                    <Button onClick={fetchPatientList}>选择已有患者</Button>
+                    <Button href='/addPatient'>新增患者</Button>
                 </ProForm.Group>
                 <ProFormText
                     width="md"
                     name="age"
                     label="年龄"
+                    disabled={true}
                     placeholder="请输入名称"
                     initialValue={params.age || ''}
                 />
                 <ProFormRadio.Group
                     label="性别"
                     name="sex"
+                    disabled={true}
                     initialValue="params.sex"
                     options={['男', '女']}
                 />
@@ -84,7 +155,7 @@ export default function Deatil() {
                 </ProForm.Item>
                 <ProForm.Group name={'recipe'} title="处方" initialValue={params.recipe || ''} style={{display:'flex'}}>
                     <MyEditor cont={params.recipe || ''} />
-                    <Button>添加</Button>
+                    <Button onClick={fetchStandardList}>添加标准处方</Button>
                 </ProForm.Group>
                 <ProFormText
                     width="md"
@@ -98,5 +169,47 @@ export default function Deatil() {
                 </ProForm.Item>
             </ProForm>
         </div>
+        <Modal title="选择患者" open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
+            <Search
+                placeholder="搜索患者"
+                allowClear
+                onSearch={onSearch}
+                style={{
+                    width: 200,
+                }}
+            />
+            <div className='radioWrap'>
+                <Radio.Group onChange={onRadioChange} value={patient}>
+                    <Space direction="vertical">
+                        {
+                            patientList.map(item=>(
+                                <Radio value={item} key={item.id}>{item.name} {!!item.age?`${item.age}岁`:''} {item.sex==1?'女':'男'}</Radio>
+                            ))
+                        }
+                    </Space>
+                </Radio.Group>
+            </div>
+        </Modal>
+        <Modal title="选择标准处方" open={isStandardOpen} onOk={handleStandardOk} onCancel={handleStandardCancel}>
+            <Search
+                placeholder="搜索标准处方"
+                allowClear
+                onSearch={onStandardSearch}
+                style={{
+                    width: 200,
+                }}
+            />
+            <div className='radioWrap'>
+                <Radio.Group onChange={onStandardRadioChange} value={standard}>
+                    <Space direction="vertical">
+                        {
+                            standardList.map(item=>(
+                                <Radio value={item} key={item.id}>{item.name} {item.describe}</Radio>
+                            ))
+                        }
+                    </Space>
+                </Radio.Group>
+            </div>
+        </Modal>
     </div>)
 }

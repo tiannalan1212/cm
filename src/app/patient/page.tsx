@@ -3,8 +3,8 @@ import React, { useState, useEffect } from 'react';
 import { Button, Form, Input } from 'antd';
 import { ProTable } from '@ant-design/pro-components';
 import { PlusOutlined } from '@ant-design/icons';
-export default function Home() {
 
+export default function Home() {
 
   const columns = [
     {
@@ -71,7 +71,6 @@ export default function Home() {
   
   const fetchData = async (params: any) => {
     const { current, pageSize, sorter } = params;
-
 
     try {
       const response = await fetch(`/api/users?current=${current}&pageSize=${pageSize}&sorter=${sorter}`,{method: "GET"});
