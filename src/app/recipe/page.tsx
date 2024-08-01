@@ -1,6 +1,5 @@
 "use client";
 import React, { useState } from 'react';
-// import type { FormProps } from 'antd';
 import { Button, Form, Input } from 'antd';
 import { ProTable } from '@ant-design/pro-components';
 import { PlusOutlined } from '@ant-design/icons';
@@ -11,12 +10,12 @@ export default function Home() {
   const columns = [
     {
       title: '患者名称',
-      dataIndex: 'name',
+      dataIndex: 'patient_name',
       ellipsis: true,
     },
     {
         title: '开方时间',
-        dataIndex: 'createTime',
+        dataIndex: 'create_time',
         key: 'showTime',
         valueType: 'date',
         sorter: true,
@@ -24,7 +23,7 @@ export default function Home() {
       },
       {
         title: '开方时间',
-        dataIndex: 'createTime',
+        dataIndex: 'create_time',
         valueType: 'dateRange',
         hideInTable: true,
         search: {
@@ -38,24 +37,28 @@ export default function Home() {
       },
     {
       title: '主诉',
-      dataIndex: 'depict',
+      dataIndex: 'narrative',
       hideInSearch: true,
       minWidth: '200px'
     },
     {
       title: '诊断',
-      dataIndex: 'chapter',
+      dataIndex: 'diagnosis',
+      hideInSearch: true,
+    },
+    {
+      title: '处方',
+      dataIndex: 'recipe',
       hideInSearch: true,
     },
     {
       title: '贴数（贴）',
-      dataIndex: 'remark',
+      dataIndex: 'num',
       hideInSearch: true,
     },
     
     {
       title: '操作',
-      dataIndex: 'age',
       hideInSearch: true,
       render: () => (<div>
         <Button type='link' href='/recipeDetail'>详情</Button>
@@ -66,17 +69,14 @@ export default function Home() {
   ];
   const [params, setParams] = useState({ current: 1, pageSize: 20 });
 
+
   const fetchData = async (params: any) => {
     const { current, pageSize, sorter } = params;
-    // const response = await fetch(`/api/data?current=${current}&pageSize=${pageSize}&sorter=${sorter}`);
-    // const data = await response.json();
-    const list = [
-      { 'id': '111', 'name': '张三', 'depict': '描述描述', 'chapter': '太阳篇', 'remark': '注解注解', 'createTime': '2024-06-27' },
-      { 'id': '222', 'name': '李四', 'depict': '描述描222述', 'chapter': '太阳篇', 'remark': '注解注解', 'createTime': '2010-03-02' }
-    ]
+    const response = await fetch(`/api/recipes?current=${current}&pageSize=${pageSize}&sorter=${sorter}`);
+    const data = await response.json();
     return {
-      data: list,
-      total: list.length,
+      data: data,
+      total: data.length,
       success: true,
     };
   };

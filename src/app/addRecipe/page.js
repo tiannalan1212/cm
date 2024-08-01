@@ -1,11 +1,10 @@
 "use client";
 import React, { useState, useEffect,useRef } from 'react';
-import MyEditor from '../../../public/wangedit/wangedit'
 import { ProForm, ProFormText, ProFormRadio } from '@ant-design/pro-components';
 import { Button, Modal, Input, Radio, Space, message } from 'antd';
 import styles from "../page.module.css";
 import "./add.scss"
-const { Search } = Input;
+const { Search, TextArea } = Input;
 
 export default function Deatil() {
     const [params, setParams] = useState({})
@@ -52,10 +51,8 @@ export default function Deatil() {
     }
 
     const handleStandardOk = () => {
-        console.log('formRef?.current', formRef?.current)
-        formRef?.current.setFieldValue('name',patient.name)
-        formRef?.current.setFieldValue('age',patient.age)
-        formRef?.current.setFieldValue('sex',patient.sex)
+        let R = formRef?.current.getFieldValue('recipe') || ''
+        formRef?.current.setFieldValue('recipe',`${R}${standard.describe}`)
         handleStandardCancel()
     }
     const handleStandardCancel = () => {
@@ -82,19 +79,19 @@ export default function Deatil() {
         }
     };
     const fetchStandardList = async (name) => {
-        // try {
-        //   const response = await fetch(`/api/users?name=${name||''}`,{method: "GET"});
-        //   if (response.ok) {
-        //     const data = await response.json();
-        //     console.log('data',data)
-        //     setPatientList(data)
+        try {
+          const response = await fetch(`/api/standards?name=${name||''}`,{method: "GET"});
+          if (response.ok) {
+            const data = await response.json();
+            console.log('data',data)
+            setStandardList(data)
             setIsStandardOpen(true);
-        //   } else {
-        //     throw new Error('Failed to fetch data');
-        //   }
-        // } catch (error) {
-        //   console.error('Error fetching data:', error);
-        // }
+          } else {
+            throw new Error('Failed to fetch data');
+          }
+        } catch (error) {
+          console.error('Error fetching data:', error);
+        }
     };
 
     const onRadioChange = (e) => {
@@ -111,7 +108,6 @@ export default function Deatil() {
             <ProForm
                 form={form}
                 formRef={formRef}
-                //layout="inline"
                 onFinish={async (values) => {
                     // await waitTime(2000);
                     console.log('valuesvalues======',values);
@@ -148,15 +144,17 @@ export default function Deatil() {
                     options={['男', '女']}
                 />
                 <ProForm.Item name={'narrative'} label="主诉" initialValue={params.narrative || ''}>
-                    <MyEditor cont={params.narrative || ''} />
+                    <TextArea rows={4} name="narrative" placeholder="请输入主诉"/>
                 </ProForm.Item>
                 <ProForm.Item name={'diagnosis'} label="诊断"initialValue={params.diagnosis || ''}>
-                    <MyEditor cont={params.diagnosis || ''} />
+                    <TextArea rows={4}  name="diagnosis" placeholder="请输入诊断"/>
                 </ProForm.Item>
-                <ProForm.Group name={'recipe'} title="处方" initialValue={params.recipe || ''} style={{display:'flex'}}>
-                    <MyEditor cont={params.recipe || ''} />
-                    <Button onClick={fetchStandardList}>添加标准处方</Button>
-                </ProForm.Group>
+                <div  style={{display:'flex'}}>
+                    <ProForm.Item name={'recipe'} label="处方"initialValue={params.recipe || ''} style={{flex:1}}>
+                        <TextArea rows={4}  name="recipe" placeholder="请输入处方"/>
+                    </ProForm.Item>
+                    <Button className="recipeBtn" onClick={fetchStandardList}>添加标准处方</Button>
+                </div>
                 <ProFormText
                     width="md"
                     name="num"
@@ -165,7 +163,7 @@ export default function Deatil() {
                     initialValue={params.num || ''}
                 />
                 <ProForm.Item name={'note'} label="注意事项"initialValue={params.note || ''}>
-                    <MyEditor cont={params.note || ''} />
+                    <TextArea rows={4}  name="note" placeholder="请输入注意事项"/>
                 </ProForm.Item>
             </ProForm>
         </div>

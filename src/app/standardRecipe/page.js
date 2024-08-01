@@ -1,58 +1,50 @@
 "use client";
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 // import type { FormProps } from 'antd';
-import { Button, Form, Input } from 'antd';
+import { Button, Input } from 'antd';
 import { ProTable } from '@ant-design/pro-components';
 import { PlusOutlined } from '@ant-design/icons';
 export default function Home() {
 
 
-
-  // const onFinish: FormProps<FieldType>['onFinish'] = (values) => {
-  //   console.log('Success:', values);
-  // };
-
-  // const onFinishFailed: FormProps<FieldType>['onFinishFailed'] = (errorInfo) => {
-  //   console.log('Failed:', errorInfo);
-  // };
   const columns = [
     {
       title: '标准方剂',
       dataIndex: 'name',
-      copyable: true,
-      ellipsis: true,
-      tooltip: '标题过长会自动收缩',
     },
-    {
-      title: '篇章',
-      dataIndex: 'chapter',
-      hideInTable: true,
-      filters: true,
-      onFilter: true,
-      ellipsis: true,
-      valueType: 'select',
-      valueEnum: {
-        open: {
-          text: '太阳篇',
-          status: '1',
-        },
-        closed: {
-          text: '太阴篇',
-          status: '2',
-        },
-      }
-    },
+    // {
+    //   title: '篇章',
+    //   dataIndex: 'chapter',
+    //   hideInTable: true,
+    //   filters: true,
+    //   onFilter: true,
+    //   ellipsis: true,
+    //   valueType: 'select',
+    //   valueEnum: {
+    //     open: {
+    //       text: '太阳篇',
+    //       status: '1',
+    //     },
+    //     closed: {
+    //       text: '太阴篇',
+    //       status: '2',
+    //     },
+    //   }
+    // },
     {
       title: '方剂描述',
-      dataIndex: 'depict',
+      dataIndex: 'describe',
       hideInSearch: true,
-      minWidth: '200px'
+      minWidth: '200px',
+      copyable: true,
+      ellipsis: true,
+      tooltip: '内容过长会自动收缩',
     },
-    {
-      title: '篇章',
-      dataIndex: 'chapter',
-      hideInSearch: true,
-    },
+    // {
+    //   title: '篇章',
+    //   dataIndex: 'chapter',
+    //   hideInSearch: true,
+    // },
     {
       title: '注解',
       dataIndex: 'remark',
@@ -60,7 +52,7 @@ export default function Home() {
     },
     {
       title: '创建时间',
-      dataIndex: 'createTime',
+      dataIndex: 'create_time',
       key: 'showTime',
       valueType: 'date',
       sorter: true,
@@ -68,7 +60,7 @@ export default function Home() {
     },
     {
       title: '创建时间',
-      dataIndex: 'createTime',
+      dataIndex: 'create_time',
       valueType: 'dateRange',
       hideInTable: true,
       search: {
@@ -95,20 +87,21 @@ export default function Home() {
 
   const fetchData = async (params) => {
     const { current, pageSize, sorter } = params;
-    // const response = await fetch(`/api/data?current=${current}&pageSize=${pageSize}&sorter=${sorter}`);
-    // const data = await response.json();
-    const list = [
-      { 'id': '111', 'name': '麻杏甘石汤', 'depict': '描述描述', 'chapter': '太阳篇', 'remark': '注解注解', 'createTime': '2024-06-27' },
-      { 'id': '222', 'name': '麻杏甘石汤11', 'depict': '描述描222述', 'chapter': '太阳篇', 'remark': '注解注解', 'createTime': '2010-03-02' }
-    ]
+    const response = await fetch(`/api/standards?current=${current}&pageSize=${pageSize}&sorter=${sorter}`);
+    const data = await response.json();
     return {
-      data: list,
-      total: list.length,
+      data: data,
+      total: data.length,
       success: true,
     };
   };
-  return (<main>
+  useEffect(() => {
 
+    console.log('window.location',window.history)
+   
+
+  }, [window.location])
+  return (<main>
     <ProTable
       request={fetchData}
       params={params}

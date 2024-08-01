@@ -71,22 +71,17 @@ export default function Home() {
   
   const fetchData = async (params: any) => {
     const { current, pageSize, sorter } = params;
-
-    try {
-      const response = await fetch(`/api/users?current=${current}&pageSize=${pageSize}&sorter=${sorter}`,{method: "GET"});
-      if (response.ok) {
-        const data = await response.json();
-        console.log('data',data)
-        return {
-          data: data,
-          total: data.length,
-          success: true,
-        };
-      } else {
-        throw new Error('Failed to fetch data');
-      }
-    } catch (error) {
-      console.error('Error fetching data:', error);
+    const response = await fetch(`/api/users?current=${current}&pageSize=${pageSize}&sorter=${sorter}`,{method: "GET"});
+    if (response.ok) {
+      const data = await response.json();
+      console.log('data',data)
+      return {
+        data: data,
+        total: data.length,
+        success: true,
+      };
+    } else {
+      throw new Error('Failed to fetch data');
     }
   };
 
