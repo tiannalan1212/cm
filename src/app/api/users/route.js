@@ -1,8 +1,12 @@
 import { query } from "../../../../lib/db";
 
 export async function GET(request) {
-    const users = await query({
-        query: "SELECT * FROM patient WHERE name='zdl'",
+
+  // let name= 'zdl'
+    const users =await query({
+        // query: "SELECT * FROM patient WHERE name='zdl' AND remark='qqq'",
+        // query: "SELECT * FROM patient WHERE name='?'",
+        query: "SELECT * FROM patient",
         values: [],
     });
 
@@ -13,12 +17,14 @@ export async function GET(request) {
 }
 
 export async function POST(request) {
-
+console.log('request',request)
     try {
-        const { data } = await request.json();
-        const updateUsers = await query({
+        const { data } = request.json();
+        console.log('data=======',data)
+        const {name} = data
+        const updateUsers =await query({
             query: `INSERT INTO patient(id,name) VALUES(?,?)`,
-            values: ["10000004","nqwed"],
+            values: ["10000006", name],
         });
         const result = updateUsers.affectedRows;
         let message = "";
@@ -36,6 +42,7 @@ export async function POST(request) {
             product: user
         }));
     } catch (error) {
+      console.log('error',error)
         return new Response(JSON.stringify({
             status: 500,
             data: request
