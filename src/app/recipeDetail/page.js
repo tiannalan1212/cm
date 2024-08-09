@@ -19,8 +19,8 @@ export default function Deatil() {
 
 
     return (<div className={styles.body}>
-        <div className='detailTitle'>处方详情</div>
-        <div className='line'></div>
+        <div className={styles.title}>处方详情</div>
+        <div className={styles.line}></div>
         {/* <div className='detailWrap'>
             <div className={styles.grid}>
                 <a
@@ -68,7 +68,7 @@ export default function Deatil() {
                 </div>
                 <Button  href='/addRecipe?isAdd=1' >编辑</Button>
             </div>
-            <div className='line'></div>
+            <div className={styles.line}></div>
             <h3>处方信息</h3>
             <div className='contBody'>
                 <div className='contBodyTop'>

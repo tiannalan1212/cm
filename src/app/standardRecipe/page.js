@@ -1,6 +1,7 @@
 "use client";
 import React, { useEffect, useState } from 'react';
 // import type { FormProps } from 'antd';
+import styles from "../page.module.css";
 import { Button, Input } from 'antd';
 import { ProTable } from '@ant-design/pro-components';
 import { PlusOutlined } from '@ant-design/icons';
@@ -102,6 +103,8 @@ export default function Home() {
 
   }, [window.location])
   return (<main>
+    <div className={styles.title}>标准方剂列表</div>
+    <div className={styles.line}></div>
     <ProTable
       request={fetchData}
       params={params}

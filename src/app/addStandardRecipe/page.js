@@ -36,8 +36,8 @@ export default function Deatil() {
 
 
     return (<div className={styles.body}>
-        <div className='addTitle'>新增标准方剂</div>
-        <div className='line'></div>
+        <div className={styles.title}>新增标准方剂</div>
+        <div className={styles.line}></div>
         <div className='formWrap'>
             <ProForm
                 form={form}
