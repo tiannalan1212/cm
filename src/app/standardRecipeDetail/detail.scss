@@ -5,13 +5,7 @@
     display: flex;
     justify-content: center;
 }
-.detailTitle {
-    height: 50px;
-    line-height: 50px;
-    padding: 0 10px;
-    font-size: 18px;
-    background-color: #ffffff;
-}
+
 .detailContent{
     background-color: #ffffff;
     border-radius: 5px;
@@ -47,9 +41,11 @@
         }
     }
 }
-.line{
-    background-color: #F0F2F5;
-    height: 1px;
-    width: 100%;
-    margin: 5px 0;
+.popWrap{
+    position: absolute;
+    right: 0vw;
+    height: 40vw;
+}
+.popItemWrap{
+
 }

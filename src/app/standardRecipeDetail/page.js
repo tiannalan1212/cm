@@ -1,7 +1,8 @@
 "use client";
 import React, { useState } from 'react';
 import MyEditor from '../../../public/wangedit/wangedit'
-import { Button, Form, Input, } from 'antd';
+import PagePop from './pagePop'
+import { Button, Form, Input, Popover} from 'antd';
 import { ClockCircleOutlined } from '@ant-design/icons';
 import styles from "../page.module.css";
 import "./detail.scss"
@@ -17,11 +18,10 @@ export default function Deatil() {
         })
     }
 
-
     return (<div className={styles.body}>
-        <div className='detailTitle'>标准方剂详情</div>
-        <div className='line'></div>
-        <div className='detailWrap'>
+        <div className={styles.title}>标准方剂详情</div>
+        <div className={styles.line}></div>
+        {/* <div className='detailWrap'>
             <div className={styles.grid}>
                 <a
                     href="/standardRecipe"
@@ -55,7 +55,8 @@ export default function Deatil() {
                 </a>
             </div>
 
-        </div>
+        </div> */}
+        <PagePop> </PagePop>
 
         <div className='detailContent' >
             <div className='contTop'>
@@ -66,7 +67,7 @@ export default function Deatil() {
                 <Button  href='/addStandardRecipe?isAdd=0' >编辑</Button>
                 {/* href='/addStandardRecipe?isAdd=0' onClick={()=>handler()}*/}
             </div>
-            <div className='line'></div>
+            <div className={styles.line}></div>
             <div className='contBody'>
                 <p>1. 方剂描述</p>
                 <span>桂枝3钱，芍药三钱</span>
