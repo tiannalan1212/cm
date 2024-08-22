@@ -45,7 +45,7 @@ export default function PagePop() {
 
 
     return (<div className='popWrap'>
-        <Popover content={content} trigger="hover">
+        <Popover content={content} trigger="hover" placement="left">
             <div>菜单</div>
         </Popover>
 

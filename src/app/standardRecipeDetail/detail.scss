@@ -43,8 +43,15 @@
 }
 .popWrap{
     position: absolute;
-    right: 0vw;
-    height: 40vw;
+    right: 2vw;
+    top: 10vw;
+    width: 50px;
+    height: 50px;
+    border-radius: 25px;
+    background-color: chocolate;
+    line-height: 50px;
+    text-align: center;
+    color: white;
 }
 .popItemWrap{
 
