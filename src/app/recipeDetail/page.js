@@ -1,8 +1,6 @@
 "use client";
 import React, { useState } from 'react';
-import MyEditor from '../../../public/wangedit/wangedit'
 import { Button, Form, Input, } from 'antd';
-import { ClockCircleOutlined } from '@ant-design/icons';
 import styles from "../page.module.css";
 import "./detail.scss"
 import Router from 'next/router'
@@ -21,41 +19,6 @@ export default function Deatil() {
     return (<div className={styles.body}>
         <div className={styles.title}>处方详情</div>
         <div className={styles.line}></div>
-        {/* <div className='detailWrap'>
-            <div className={styles.grid}>
-                <a
-                    href="/standardRecipe"
-                    className={styles.card}
-                    rel="noopener noreferrer"
-                >
-                    <h2>
-                        标准方剂 <span>-&gt;</span>
-                    </h2>
-                </a>
-
-                <a
-                    href="/patient"
-                    className={styles.card}
-                    rel="noopener noreferrer"
-                >
-                    <h2>
-                        患者 <span>-&gt;</span>
-                    </h2>
-                </a>
-
-                <a
-                    href="/recipe"
-                    className={styles.card}
-                    rel="noopener noreferrer"
-                >
-                    <h2>
-                        处方 <span>-&gt;</span>
-                    </h2>
-
-                </a>
-            </div>
-
-        </div> */}
 
         <div className='detailContent' >
             <h3>患者信息</h3>

@@ -1,6 +1,5 @@
 "use client";
 import React, { useEffect, useState } from 'react';
-// import type { FormProps } from 'antd';
 import styles from "../page.module.css";
 import { Button, Input } from 'antd';
 import { ProTable } from '@ant-design/pro-components';
